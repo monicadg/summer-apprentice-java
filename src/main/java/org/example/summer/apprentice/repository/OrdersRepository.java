@@ -11,6 +11,10 @@ import java.util.Optional;
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
-    @Query("select o from Orders o inner join Event e on o.event.eventId = e.eventId and e.venue.venueId=?1 where e.eventType.eventTypeName=?2")
-    Optional<List<Orders>> findOrdersByVenueIdAndEventType(long venueId,  String eventTypeName);
+
+
+
+
+    @Query("select o from Orders o  where o.customer.customerId=?1")
+    Optional<List<Orders>> findOrdersByCustomerId(long customerId);
 }

@@ -12,14 +12,15 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "orders_id")
     private Long ordersId;
-    @ManyToOne
-    @JoinColumn(name = "event_id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "event_id" , referencedColumnName = "event_id")
+    @PrimaryKeyJoinColumn
     private Event event;
     @ManyToOne
-    @JoinColumn(name = "customer_id")
+    @JoinColumn(name = "customer_id" , referencedColumnName = "customer_id")
     private Customer customer;
     @ManyToOne
-    @JoinColumn(name = "ticket_category_id")
+    @JoinColumn(name = "ticket_category_id" , referencedColumnName = "ticket_category_id")
     private TicketCategory  ticketCategory;
     @Column(name = "timestamp")
     private LocalDateTime timestamp = LocalDateTime.now();
@@ -30,6 +31,14 @@ public class Orders {
 
     public Orders(Long ordersId, Event event, Customer customer, TicketCategory ticketCategory, Integer numberOfTickets, Float totalPrice) {
         this.ordersId = ordersId;
+        this.event = event;
+        this.customer = customer;
+        this.ticketCategory = ticketCategory;
+        this.numberOfTickets = numberOfTickets;
+        this.totalPrice = totalPrice;
+    }
+
+    public Orders(Event event, Customer customer, TicketCategory ticketCategory, Integer numberOfTickets, Float totalPrice) {
         this.event = event;
         this.customer = customer;
         this.ticketCategory = ticketCategory;
