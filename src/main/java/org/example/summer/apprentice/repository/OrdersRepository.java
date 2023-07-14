@@ -11,10 +11,6 @@ import java.util.Optional;
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
-
-
-
-
-    @Query("select o from Orders o  where o.customer.customerId=?1")
-    Optional<List<Orders>> findOrdersByCustomerId(long customerId);
+    @Query("select o from Orders o  where o.user.userId=?1")
+    Optional<List<Orders>> findOrdersByUserId(long customerId);
 }

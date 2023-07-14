@@ -17,40 +17,39 @@ public class OrdersService {
 
     private final OrdersRepository ordersRepository;
     private final EventRepository eventRepository;
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
 
 
     @Autowired
-    public OrdersService(OrdersRepository ordersRepository, EventRepository eventRepository, CustomerRepository customerRepository) {
+    public OrdersService(OrdersRepository ordersRepository, EventRepository eventRepository, UserRepository userRepository) {
         this.ordersRepository = ordersRepository;
         this.eventRepository = eventRepository;
-        this.customerRepository = customerRepository;
+        this.userRepository = userRepository;
     }
 
     @Transactional
-    public OrdersDTO createOrder(OrdersDTO orderDTO, Long customerId) throws Exception {
+    public OrdersDTO createOrder(OrdersDTO orderDTO, Long userId) throws Exception {
         Optional<Event> event = eventRepository.findById(orderDTO.eventId());
         event.orElseThrow(() -> new Exception("no event found for eventId=" + orderDTO.eventId()));
 
-        Optional<Customer> customer = customerRepository.findById(customerId);
-        customer.orElseThrow(() -> new Exception("no customer found for customerId=" + customerId));
+        Optional<User> user = userRepository.findById(userId);
+        user.orElseThrow(() -> new Exception("no user found for userId=" + userId));
 
         Optional<TicketCategory> ticketCategory = event.get().getTicketCategories().stream().filter(tk -> tk.getTicketCategoryId() == orderDTO.ticketCategoryId()).findFirst();
         ticketCategory.orElseThrow(() -> new Exception("no ticketCategory found for ticketCategoryId=" + orderDTO.ticketCategoryId()));
 
         Float price = ticketCategory.get().getPrice() * orderDTO.numberOfTickets();
 
-        Orders order = new Orders(event.get(), customer.get(), ticketCategory.get(), orderDTO.numberOfTickets(), price);
+        Orders order = new Orders(user.get(), ticketCategory.get(), orderDTO.numberOfTickets(), price);
         ordersRepository.save(order);
 
         return MapperUtil.transformOrdersToDTO(order);
     }
 
-    public List<OrdersDTO> getAllOrdersForCustomer(Long customerId) throws Exception {
-        Optional<List<Orders>> orders = ordersRepository.findOrdersByCustomerId(customerId);
+    public List<OrdersDTO> getAllOrdersForUser(Long userId) throws Exception {
+        Optional<List<Orders>> orders = ordersRepository.findOrdersByUserId(userId);
 
         orders.orElseThrow(() -> new Exception("no orders found for User"));
-
 
         List<OrdersDTO> ordersDTO = new ArrayList<>();
         for (Orders order : orders.get()) {

@@ -16,12 +16,13 @@ public class Event {
     @JoinColumn(name = "venue_id", referencedColumnName = "venue_id")
     private Venue venue;
     @ManyToOne
-    @JoinColumn(name = "event_type_id", referencedColumnName = "event_type_id")
+    @JoinColumn(name = "event_type_id")
     private EventType eventType;
-    @Column(name = "event_description")
-    private String eventDescription;
-    @Column(name = "event_name")
-    private String eventName;
+    @Column(name = "name")
+    private String name;
+    @Column(name = "description")
+    private String description;
+
     @Column(name = "start_date")
     private Date startDate;
     @Column(name = "end_date")
@@ -30,12 +31,12 @@ public class Event {
     @OneToMany(mappedBy = "event")
     private List<TicketCategory> ticketCategories = new ArrayList<>();;
 
-    public Event(Long eventId, Venue venue, EventType eventType, String eventDescription, String eventName, Date startDate, Date endDate,List<TicketCategory> ticketCategories) {
+    public Event(Long eventId, Venue venue, EventType eventType, String description, String name, Date startDate, Date endDate, List<TicketCategory> ticketCategories) {
         this.eventId = eventId;
         this.venue = venue;
         this.eventType = eventType;
-        this.eventDescription = eventDescription;
-        this.eventName = eventName;
+        this.description = description;
+        this.name = name;
         this.startDate = startDate;
         this.endDate = endDate;
         this.ticketCategories = ticketCategories;
@@ -67,20 +68,20 @@ public class Event {
         this.eventType = eventType;
     }
 
-    public String getEventDescription() {
-        return eventDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public void setEventDescription(String eventDescription) {
-        this.eventDescription = eventDescription;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public String getEventName() {
-        return eventName;
+    public String getName() {
+        return name;
     }
 
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Date getStartDate() {

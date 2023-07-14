@@ -23,7 +23,7 @@ public class OrdersController {
 
     @GetMapping
     public ResponseEntity<List<OrdersDTO>> getOrders() throws Exception {
-        List<OrdersDTO> orders = ordersService.getAllOrdersForCustomer(1l);
+        List<OrdersDTO> orders = ordersService.getAllOrdersForUser(1l);
 
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }

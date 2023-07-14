@@ -13,7 +13,7 @@ import java.util.List;
 public class MapperUtil {
 
     public static OrdersDTO transformOrdersToDTO(Orders order) {
-        return new OrdersDTO(order.getEvent().getEventId(), order.getTimestamp(), order.getTicketCategory().getTicketCategoryId(), order.getNumberOfTickets(), order.getTotalPrice());
+        return new OrdersDTO(order.getTicketCategory().getEvent().getEventId(), order.getOrderedAt(), order.getTicketCategory().getTicketCategoryId(), order.getNumberOfTickets(), order.getTotalPrice());
     }
 
     public static EventDTO transformEventToDTO(Event event) {
@@ -31,6 +31,6 @@ public class MapperUtil {
         String startDate = simpleDateFormat.format(event.getStartDate());
         String endDate = simpleDateFormat.format(event.getEndDate());
 
-        return new EventDTO(event.getEventId(), venueDTO, eventType.getEventTypeName(), event.getEventDescription(), event.getEventName(), startDate, endDate, ticketCategoryDTOList);
+        return new EventDTO(event.getEventId(), venueDTO, eventType.getEventTypeName(), event.getDescription(), event.getName(), startDate, endDate, ticketCategoryDTOList);
     }
 }

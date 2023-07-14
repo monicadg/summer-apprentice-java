@@ -12,46 +12,39 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "orders_id")
     private Long ordersId;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "event_id" , referencedColumnName = "event_id")
-    @PrimaryKeyJoinColumn
-    private Event event;
     @ManyToOne
-    @JoinColumn(name = "customer_id" , referencedColumnName = "customer_id")
-    private Customer customer;
+    @JoinColumn(name = "user_id" , referencedColumnName = "user_id")
+    private User user;
     @ManyToOne
     @JoinColumn(name = "ticket_category_id" , referencedColumnName = "ticket_category_id")
     private TicketCategory  ticketCategory;
-    @Column(name = "timestamp")
-    private LocalDateTime timestamp = LocalDateTime.now();
+    @Column(name = "ordered_at")
+    private LocalDateTime orderedAt = LocalDateTime.now();
     @Column(name = "number_of_tickets")
     private Integer numberOfTickets ;
     @Column(name = "total_price")
     private Float totalPrice;
 
-    public Orders(Long ordersId, Event event, Customer customer, TicketCategory ticketCategory, Integer numberOfTickets, Float totalPrice) {
+    public Orders(Long ordersId, User user, TicketCategory ticketCategory, Integer numberOfTickets, Float totalPrice) {
         this.ordersId = ordersId;
-        this.event = event;
-        this.customer = customer;
+        this.user = user;
         this.ticketCategory = ticketCategory;
         this.numberOfTickets = numberOfTickets;
         this.totalPrice = totalPrice;
     }
 
-    public Orders(Event event, Customer customer, TicketCategory ticketCategory, Integer numberOfTickets, Float totalPrice) {
-        this.event = event;
-        this.customer = customer;
+    public Orders(User user, TicketCategory ticketCategory, Integer numberOfTickets, Float totalPrice) {
+        this.user = user;
         this.ticketCategory = ticketCategory;
         this.numberOfTickets = numberOfTickets;
         this.totalPrice = totalPrice;
     }
 
-    public Orders(Long ordersId, Event event, Customer customer, TicketCategory ticketCategory,LocalDateTime timestamp, Integer numberOfTickets, Float totalPrice) {
+    public Orders(Long ordersId, User user, TicketCategory ticketCategory, LocalDateTime orderedAt, Integer numberOfTickets, Float totalPrice) {
         this.ordersId = ordersId;
-        this.event = event;
-        this.customer = customer;
+        this.user = user;
         this.ticketCategory = ticketCategory;
-        this.timestamp = timestamp;
+        this.orderedAt = orderedAt;
         this.numberOfTickets = numberOfTickets;
         this.totalPrice = totalPrice;
     }
@@ -65,20 +58,13 @@ public class Orders {
     public void setOrdersId(Long ordersId) {
         this.ordersId = ordersId;
     }
-    public Event getEvent() {
-        return event;
+
+    public User getCustomer() {
+        return user;
     }
 
-    public void setEvent(Event event) {
-        this.event = event;
-    }
-
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
+    public void setCustomer(User user) {
+        this.user = user;
     }
 
     public TicketCategory getTicketCategory() {
@@ -89,12 +75,12 @@ public class Orders {
         this.ticketCategory = ticketCategory;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
+    public LocalDateTime getOrderedAt() {
+        return orderedAt;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
+    public void setOrderedAt(LocalDateTime orderedAt) {
+        this.orderedAt = orderedAt;
     }
 
     public Integer getNumberOfTickets() {
@@ -117,23 +103,22 @@ public class Orders {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Orders orders = (Orders) o;
-        return ordersId.equals(orders.ordersId) && Objects.equals(event, orders.event) && Objects.equals(customer, orders.customer) && Objects.equals(ticketCategory, orders.ticketCategory) && Objects.equals(timestamp, orders.timestamp) && Objects.equals(numberOfTickets, orders.numberOfTickets) && Objects.equals(totalPrice, orders.totalPrice);
+        Orders order = (Orders) o;
+        return ordersId.equals(order.ordersId) && Objects.equals(user, order.user) && Objects.equals(ticketCategory, order.ticketCategory) && Objects.equals(orderedAt, order.orderedAt) && Objects.equals(numberOfTickets, order.numberOfTickets) && Objects.equals(totalPrice, order.totalPrice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ordersId, event, customer, ticketCategory, timestamp, numberOfTickets, totalPrice);
+        return Objects.hash(ordersId, user, ticketCategory, orderedAt, numberOfTickets, totalPrice);
     }
 
     @Override
     public String toString() {
         return "Orders{" +
                 "ordersId=" + ordersId +
-                ", event=" + event +
-                ", customer=" + customer +
+                ", user=" + user +
                 ", ticketCategory=" + ticketCategory +
-                ", timestamp=" + timestamp +
+                ", timestamp=" + orderedAt +
                 ", numberOfTickets=" + numberOfTickets +
                 ", totalPrice=" + totalPrice +
                 '}';
