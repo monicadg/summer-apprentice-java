@@ -11,9 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service for Events
+ */
 @Service
 public class EventService {
-
 
     private final EventRepository eventRepository;
 
@@ -22,6 +24,13 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
+    /**
+     * Finds all events that correspond to venueId and eventTypeName
+     * @param venueId
+     * @param eventTypeName
+     * @return Event
+     * @throws Exception
+     */
     public List<EventDTO> findEventsByVenueIdAndEventType(long venueId, String eventTypeName) throws Exception {
         Optional<List<Event>> events = eventRepository.findByVenueIdAndEventType(venueId, eventTypeName);
 

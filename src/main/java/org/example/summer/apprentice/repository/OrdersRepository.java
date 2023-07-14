@@ -8,9 +8,17 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Repository for Orders
+ */
 @Repository
 public interface OrdersRepository extends JpaRepository<Orders, Long> {
 
+    /**
+     * Finds Orders for specified user
+     * @param userId
+     * @return Optional<List<Orders>>
+     */
     @Query("select o from Orders o  where o.user.userId=?1")
-    Optional<List<Orders>> findOrdersByUserId(long customerId);
+    Optional<List<Orders>> findOrdersByUserId(long userId);
 }

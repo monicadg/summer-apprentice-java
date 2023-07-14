@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *  Service for Orders
+ */
 @Service
 public class OrdersService {
 
@@ -27,6 +30,13 @@ public class OrdersService {
         this.userRepository = userRepository;
     }
 
+    /**
+     * Creates and order of a given userId
+     * @param orderDTO
+     * @param userId
+     * @return OrdersDTO
+     * @throws Exception
+     */
     @Transactional
     public OrdersDTO createOrder(OrdersDTO orderDTO, Long userId) throws Exception {
         Optional<Event> event = eventRepository.findById(orderDTO.eventId());
@@ -46,6 +56,12 @@ public class OrdersService {
         return MapperUtil.transformOrdersToDTO(order);
     }
 
+    /**
+     * Returns all placed orders for a given user
+     * @param userId
+     * @return List<OrdersDTO>
+     * @throws Exception
+     */
     public List<OrdersDTO> getAllOrdersForUser(Long userId) throws Exception {
         Optional<List<Orders>> orders = ordersRepository.findOrdersByUserId(userId);
 

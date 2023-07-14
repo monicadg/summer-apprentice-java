@@ -10,6 +10,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * Rest Controller for Orders
+ */
 @RestController
 @RequestMapping("/orders")
 public class OrdersController {
@@ -21,6 +24,11 @@ public class OrdersController {
         this.ordersService = ordersService;
     }
 
+    /**
+     * Get All Orders for user
+     * @return ResponseEntity<List<OrdersDTO>>
+     * @throws Exception
+     */
     @GetMapping
     public ResponseEntity<List<OrdersDTO>> getOrders() throws Exception {
         List<OrdersDTO> orders = ordersService.getAllOrdersForUser(1l);
@@ -28,6 +36,12 @@ public class OrdersController {
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }
 
+    /**
+     * Create Order for user
+     * @param ordersDTO
+     * @return ResponseEntity<OrdersDTO>
+     * @throws Exception
+     */
     @PostMapping
     public ResponseEntity<OrdersDTO> createOrder(@RequestBody OrdersDTO ordersDTO) throws Exception {
         if (ordersDTO.eventId() == null || ordersDTO.ticketCategoryId() == null || ordersDTO.numberOfTickets() == null) {

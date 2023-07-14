@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Rest Controller for Events
+ */
 @RestController
 @RequestMapping("/events")
 public class EventController {
@@ -23,9 +26,15 @@ public class EventController {
         this.eventService = eventService;
     }
 
-
+    /**
+     * Get all Events that have the specified venueId and eventType
+     * @param venueId
+     * @param eventType
+     * @return ResponseEntity<List<EventDTO>>
+     * @throws Exception
+     */
     @GetMapping(value = "", params = {"venueId", "eventType"})
-    public ResponseEntity<List<EventDTO>> getOrdersByVenueIdAndEventType(@RequestParam("venueId") Long venueId, @RequestParam("eventType") String eventType) throws Exception {
+    public ResponseEntity<List<EventDTO>> getEventsByVenueIdAndEventType(@RequestParam("venueId") Long venueId, @RequestParam("eventType") String eventType) throws Exception {
         List<EventDTO> orders = eventService.findEventsByVenueIdAndEventType(venueId, eventType);
 
         return new ResponseEntity<>(orders, HttpStatus.OK);
