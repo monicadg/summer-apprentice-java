@@ -1,14 +1,19 @@
 package org.example.summer.apprentice.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "eventtype")
+@Table(name = "EventType")
 public class EventType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "event_type_id")
+    @Column(name = "eventTypeID")
     private Long eventTypeId;
     @Column(name = "name")
     private String eventTypeName;
@@ -18,7 +23,8 @@ public class EventType {
         this.eventTypeName = eventTypeName;
     }
 
-    public EventType(){}
+    public EventType() {
+    }
 
     public Long getEventTypeId() {
         return eventTypeId;

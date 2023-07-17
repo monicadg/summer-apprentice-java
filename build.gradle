@@ -1,9 +1,7 @@
 plugins {
-
     id 'org.springframework.boot' version '2.4.5'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
     id 'java'
-
 }
 
 group 'org.example'
@@ -19,17 +17,15 @@ java {
 
 dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    implementation group: 'org.springframework.boot', name:'spring-boot-starter', version: '2.7.8'
-    implementation group: 'org.springframework.boot', name:'spring-boot-starter-web',version: '2.7.8'
-    implementation group: 'org.springframework.boot', name:'spring-boot-starter-data-jpa'
-    implementation group: 'com.zaxxer', name:'HikariCP'
-    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.30'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.3'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.12.3'
-
-    implementation group: 'com.h2database', name: 'h2', version: '2.1.214'
-    implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '8.0.0.Final'
+    implementation(group: 'org.springframework.boot', name:'spring-boot-starter', version: '2.7.8')
+    implementation(group: 'org.springframework.boot', name:'spring-boot-starter-web',version: '2.7.8')
+    implementation(group: 'org.springframework.boot', name:'spring-boot-starter-data-jpa')
+    implementation(group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.3')
+    implementation(group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.12.3')
+    implementation(group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version: '2.12.3')
+    implementation(group: 'com.h2database', name: 'h2', version: '2.1.214')
+    implementation(group: 'org.hibernate.validator', name: 'hibernate-validator', version: '8.0.0.Final')
+    implementation(group: 'com.microsoft.sqlserver', name: 'mssql-jdbc')
 }
 
 test {

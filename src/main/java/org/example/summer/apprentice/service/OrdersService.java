@@ -1,78 +1,80 @@
 package org.example.summer.apprentice.service;
 
-import org.example.summer.apprentice.dto.OrdersDTO;
-import org.example.summer.apprentice.dto.mappers.MapperUtil;
-import org.example.summer.apprentice.model.*;
-import org.example.summer.apprentice.repository.*;
+import org.example.summer.apprentice.dto.OrderDTO;
+import org.example.summer.apprentice.dto.mappers.OrderMapper;
+import org.example.summer.apprentice.model.Event;
+import org.example.summer.apprentice.model.Order;
+import org.example.summer.apprentice.model.TicketCategory;
+import org.example.summer.apprentice.model.User;
+import org.example.summer.apprentice.repository.EventRepository;
+import org.example.summer.apprentice.repository.OrderRepository;
+import org.example.summer.apprentice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 /**
- *  Service for Orders
+ * Service for Orders
  */
 @Service
 public class OrdersService {
 
-    private final OrdersRepository ordersRepository;
+    private final OrderRepository orderRepository;
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
 
 
     @Autowired
-    public OrdersService(OrdersRepository ordersRepository, EventRepository eventRepository, UserRepository userRepository) {
-        this.ordersRepository = ordersRepository;
+    public OrdersService(OrderRepository orderRepository, EventRepository eventRepository, UserRepository userRepository) {
+        this.orderRepository = orderRepository;
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
     }
 
     /**
      * Creates and order of a given userId
+     *
      * @param orderDTO
      * @param userId
      * @return OrdersDTO
      * @throws Exception
      */
     @Transactional
-    public OrdersDTO createOrder(OrdersDTO orderDTO, Long userId) throws Exception {
-        Optional<Event> event = eventRepository.findById(orderDTO.eventId());
-        event.orElseThrow(() -> new Exception("no event found for eventId=" + orderDTO.eventId()));
+    public OrderDTO createOrder(OrderDTO orderDTO, Long userId) throws Exception {
+        Event event = eventRepository.findById(orderDTO.eventId())
+                .orElseThrow(() -> new Exception("no event found for eventId=" + orderDTO.eventId()));
 
-        Optional<User> user = userRepository.findById(userId);
-        user.orElseThrow(() -> new Exception("no user found for userId=" + userId));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new Exception("no user found for userId=" + userId));
 
-        Optional<TicketCategory> ticketCategory = event.get().getTicketCategories().stream().filter(tk -> tk.getTicketCategoryId() == orderDTO.ticketCategoryId()).findFirst();
-        ticketCategory.orElseThrow(() -> new Exception("no ticketCategory found for ticketCategoryId=" + orderDTO.ticketCategoryId()));
+        TicketCategory ticketCategory = event.getTicketCategories().stream()
+                .filter(tk -> tk.getTicketCategoryId().equals(orderDTO.ticketCategoryId()))
+                .findFirst()
+                .orElseThrow(() -> new Exception("no ticketCategory found for ticketCategoryId=" + orderDTO.ticketCategoryId()));
 
-        Float price = ticketCategory.get().getPrice() * orderDTO.numberOfTickets();
+        Float price = ticketCategory.getPrice() * orderDTO.numberOfTickets();
 
-        Orders order = new Orders(user.get(), ticketCategory.get(), orderDTO.numberOfTickets(), price);
-        ordersRepository.save(order);
+        Order order = new Order(user, ticketCategory, orderDTO.numberOfTickets(), price);
+        orderRepository.save(order);
 
-        return MapperUtil.transformOrdersToDTO(order);
+        return OrderMapper.map(order);
     }
 
     /**
      * Returns all placed orders for a given user
+     *
      * @param userId
      * @return List<OrdersDTO>
-     * @throws Exception
      */
-    public List<OrdersDTO> getAllOrdersForUser(Long userId) throws Exception {
-        Optional<List<Orders>> orders = ordersRepository.findOrdersByUserId(userId);
+    public List<OrderDTO> getAllOrdersForUser(Long userId) {
+        List<Order> orders = orderRepository.findOrdersByUserId(userId)
+                .orElse(new ArrayList<>());
 
-        orders.orElseThrow(() -> new Exception("no orders found for User"));
-
-        List<OrdersDTO> ordersDTO = new ArrayList<>();
-        for (Orders order : orders.get()) {
-            ordersDTO.add(MapperUtil.transformOrdersToDTO(order));
-        }
-        return ordersDTO;
+        return orders.stream()
+                .map(OrderMapper::map)
+                .toList();
     }
-
-
 }

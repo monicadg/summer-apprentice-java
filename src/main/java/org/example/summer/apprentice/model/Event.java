@@ -1,37 +1,46 @@
 package org.example.summer.apprentice.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "event")
+@Table(name = "Event")
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "event_id")
+    @Column(name = "eventID")
     private Long eventId;
     @ManyToOne
-    @JoinColumn(name = "venue_id", referencedColumnName = "venue_id")
+    @JoinColumn(name = "venueID", referencedColumnName = "venueID")
     private Venue venue;
     @ManyToOne
-    @JoinColumn(name = "event_type_id")
+    @JoinColumn(name = "eventTypeID")
     private EventType eventType;
     @Column(name = "name")
     private String name;
     @Column(name = "description")
     private String description;
-
-    @Column(name = "start_date")
-    private Date startDate;
-    @Column(name = "end_date")
-    private Date endDate;
+    @Column(name = "startDate")
+    private LocalDate startDate;
+    @Column(name = "endDate")
+    private LocalDate endDate;
 
     @OneToMany(mappedBy = "event")
-    private List<TicketCategory> ticketCategories = new ArrayList<>();;
+    private List<TicketCategory> ticketCategories = new ArrayList<>();
+    ;
 
-    public Event(Long eventId, Venue venue, EventType eventType, String description, String name, Date startDate, Date endDate, List<TicketCategory> ticketCategories) {
+    public Event(Long eventId, Venue venue, EventType eventType, String description, String name, LocalDate startDate, LocalDate endDate,
+                 List<TicketCategory> ticketCategories) {
         this.eventId = eventId;
         this.venue = venue;
         this.eventType = eventType;
@@ -42,7 +51,7 @@ public class Event {
         this.ticketCategories = ticketCategories;
     }
 
-    public Event(Long eventId, Venue venue, EventType eventType, String description, String name, Date startDate, Date endDate) {
+    public Event(Long eventId, Venue venue, EventType eventType, String description, String name, LocalDate startDate, LocalDate endDate) {
         this.eventId = eventId;
         this.venue = venue;
         this.eventType = eventType;
@@ -52,7 +61,8 @@ public class Event {
         this.endDate = endDate;
     }
 
-    public Event(){}
+    public Event() {
+    }
 
     public void setEventId(Long eventId) {
         this.eventId = eventId;
@@ -94,19 +104,19 @@ public class Event {
         this.name = name;
     }
 
-    public Date getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(Date startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public Date getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(Date endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 

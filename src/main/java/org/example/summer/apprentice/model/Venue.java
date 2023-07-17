@@ -1,14 +1,19 @@
 package org.example.summer.apprentice.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "venue")
+@Table(name = "Venue")
 public class Venue {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "venue_id")
+    @Column(name = "venueID")
     private Long venueId;
     @Column(name = "location")
     private String location;
@@ -24,7 +29,8 @@ public class Venue {
         this.capacity = capacity;
     }
 
-    public Venue(){}
+    public Venue() {
+    }
 
     public Long getVenueId() {
         return venueId;

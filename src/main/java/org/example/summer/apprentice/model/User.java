@@ -1,14 +1,19 @@
 package org.example.summer.apprentice.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "Customer") //TODO replace with "User"
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "userID")
     private Long userId;
     @Column(name = "name")
     private String name;
@@ -21,12 +26,13 @@ public class User {
         this.email = email;
     }
 
-    public User( String name, String email) {
+    public User(String name, String email) {
         this.name = name;
         this.email = email;
     }
 
-    public User(){}
+    public User() {
+    }
 
     public Long getUserId() {
         return userId;

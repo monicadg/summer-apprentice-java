@@ -3,18 +3,27 @@ package org.example.summer.apprentice.model;
 
 import org.example.summer.apprentice.model.enums.TicketCategoryType;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "ticketcategory")
+@Table(name = "TicketCategory")
 public class TicketCategory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ticket_category_id")
+    @Column(name = "ticketCategoryID")
     private Long ticketCategoryId;
     @ManyToOne
-    @JoinColumn(name = "event_id", referencedColumnName = "event_id")
+    @JoinColumn(name = "eventID", referencedColumnName = "eventID")
     private Event event;
     @Column(name = "description")
     @Enumerated(EnumType.STRING)
@@ -29,7 +38,8 @@ public class TicketCategory {
         this.price = price;
     }
 
-    public TicketCategory(){}
+    public TicketCategory() {
+    }
 
     public Long getTicketCategoryId() {
         return ticketCategoryId;

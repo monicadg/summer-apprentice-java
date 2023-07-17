@@ -1,31 +1,38 @@
 package org.example.summer.apprentice.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Table(name = "orders")
+@Table(name = "Orders") //TODO replace with "Order"
 @Entity
-public class Orders {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "orders_id")
+    @Column(name = "orderID")
     private Long ordersId;
     @ManyToOne
-    @JoinColumn(name = "user_id" , referencedColumnName = "user_id")
+    @JoinColumn(name = "userID", referencedColumnName = "userID")
     private User user;
     @ManyToOne
-    @JoinColumn(name = "ticket_category_id" , referencedColumnName = "ticket_category_id")
-    private TicketCategory  ticketCategory;
-    @Column(name = "ordered_at")
+    @JoinColumn(name = "ticketCategoryID", referencedColumnName = "ticketCategoryID")
+    private TicketCategory ticketCategory;
+    @Column(name = "orderedAt")
     private LocalDateTime orderedAt = LocalDateTime.now();
-    @Column(name = "number_of_tickets")
-    private Integer numberOfTickets ;
-    @Column(name = "total_price")
+    @Column(name = "numberOfTickets")
+    private Integer numberOfTickets;
+    @Column(name = "totalPrice")
     private Float totalPrice;
 
-    public Orders(Long ordersId, User user, TicketCategory ticketCategory, Integer numberOfTickets, Float totalPrice) {
+    public Order(Long ordersId, User user, TicketCategory ticketCategory, Integer numberOfTickets, Float totalPrice) {
         this.ordersId = ordersId;
         this.user = user;
         this.ticketCategory = ticketCategory;
@@ -33,14 +40,14 @@ public class Orders {
         this.totalPrice = totalPrice;
     }
 
-    public Orders(User user, TicketCategory ticketCategory, Integer numberOfTickets, Float totalPrice) {
+    public Order(User user, TicketCategory ticketCategory, Integer numberOfTickets, Float totalPrice) {
         this.user = user;
         this.ticketCategory = ticketCategory;
         this.numberOfTickets = numberOfTickets;
         this.totalPrice = totalPrice;
     }
 
-    public Orders(Long ordersId, User user, TicketCategory ticketCategory, LocalDateTime orderedAt, Integer numberOfTickets, Float totalPrice) {
+    public Order(Long ordersId, User user, TicketCategory ticketCategory, LocalDateTime orderedAt, Integer numberOfTickets, Float totalPrice) {
         this.ordersId = ordersId;
         this.user = user;
         this.ticketCategory = ticketCategory;
@@ -49,7 +56,8 @@ public class Orders {
         this.totalPrice = totalPrice;
     }
 
-    public Orders(){}
+    public Order() {
+    }
 
     public Long getOrdersId() {
         return ordersId;
@@ -101,10 +109,16 @@ public class Orders {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Orders order = (Orders) o;
-        return ordersId.equals(order.ordersId) && Objects.equals(user, order.user) && Objects.equals(ticketCategory, order.ticketCategory) && Objects.equals(orderedAt, order.orderedAt) && Objects.equals(numberOfTickets, order.numberOfTickets) && Objects.equals(totalPrice, order.totalPrice);
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Order order = (Order) o;
+        return ordersId.equals(order.ordersId) && Objects.equals(user, order.user) && Objects.equals(ticketCategory, order.ticketCategory) &&
+                Objects.equals(orderedAt, order.orderedAt) && Objects.equals(numberOfTickets, order.numberOfTickets) &&
+                Objects.equals(totalPrice, order.totalPrice);
     }
 
     @Override
@@ -114,7 +128,7 @@ public class Orders {
 
     @Override
     public String toString() {
-        return "Orders{" +
+        return "Order{" +
                 "ordersId=" + ordersId +
                 ", user=" + user +
                 ", ticketCategory=" + ticketCategory +
