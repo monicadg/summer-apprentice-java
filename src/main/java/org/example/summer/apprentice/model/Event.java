@@ -42,6 +42,16 @@ public class Event {
         this.ticketCategories = ticketCategories;
     }
 
+    public Event(Long eventId, Venue venue, EventType eventType, String description, String name, Date startDate, Date endDate) {
+        this.eventId = eventId;
+        this.venue = venue;
+        this.eventType = eventType;
+        this.description = description;
+        this.name = name;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     public Event(){}
 
     public void setEventId(Long eventId) {

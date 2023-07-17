@@ -1,7 +1,5 @@
 package org.example.summer.apprentice.model;
 
-import org.hibernate.validator.constraints.UniqueElements;
-
 import javax.persistence.*;
 
 @Entity
@@ -19,6 +17,11 @@ public class User {
 
     public User(Long userId, String name, String email) {
         this.userId = userId;
+        this.name = name;
+        this.email = email;
+    }
+
+    public User( String name, String email) {
         this.name = name;
         this.email = email;
     }
