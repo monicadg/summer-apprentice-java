@@ -16,7 +16,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -60,7 +59,7 @@ class OrderServiceTest {
         Order order = new Order(ORDERS_ID, user, ticketCategory, 2, 1600f);
         given(orderRepository.findOrdersByUserId(USER_ID)).willReturn(Optional.of(List.of(order)));
 
-        List<OrderDTO> resultOrderDTOList = ordersService.getAllOrdersForUser(USER_ID);
+        List<OrderDTO> resultOrderDTOList = ordersService.getOrders(USER_ID);
         assertThat(resultOrderDTOList.get(0).timestamp().toLocalDate()).isEqualTo(LocalDateTime.now().toLocalDate());
         assertThat(resultOrderDTOList.get(0).totalPrice()).isEqualTo(1600f);
     }

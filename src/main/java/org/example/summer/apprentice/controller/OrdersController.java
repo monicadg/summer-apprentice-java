@@ -36,7 +36,7 @@ public class OrdersController {
      */
     @GetMapping
     public ResponseEntity<List<OrderDTO>> getOrders() {
-        List<OrderDTO> orders = ordersService.getAllOrdersForUser(1L);
+        List<OrderDTO> orders = ordersService.getOrders(1L);
 
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }

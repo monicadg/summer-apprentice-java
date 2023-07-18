@@ -31,12 +31,12 @@ public class EventController {
      *
      * @param venueId
      * @param eventType
-     * @return ResponseEntity<List<EventDTO>>
+     * @return ResponseEntity<List < EventDTO>>
      */
-    @GetMapping(value = "", params = {"venueId", "eventType"})
-    public ResponseEntity<List<EventDTO>> getEventsByVenueIdAndEventType(@RequestParam("venueId") Long venueId,
-                                                                         @RequestParam("eventType") String eventType) {
-        List<EventDTO> orders = eventService.findEventsByVenueIdAndEventType(venueId, eventType);
+    @GetMapping
+    public ResponseEntity<List<EventDTO>> getEvents(@RequestParam(value = "venueId", required = false) Long venueId,
+                                                    @RequestParam(value = "eventType", required = false) String eventType) {
+        List<EventDTO> orders = eventService.getEvents(venueId, eventType);
 
         return new ResponseEntity<>(orders, HttpStatus.OK);
     }

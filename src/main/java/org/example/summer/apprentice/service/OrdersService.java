@@ -69,7 +69,7 @@ public class OrdersService {
      * @param userId
      * @return List<OrdersDTO>
      */
-    public List<OrderDTO> getAllOrdersForUser(Long userId) {
+    public List<OrderDTO> getOrders(Long userId) {
         List<Order> orders = orderRepository.findOrdersByUserId(userId)
                 .orElse(new ArrayList<>());
 
